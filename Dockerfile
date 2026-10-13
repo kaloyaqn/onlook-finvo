@@ -15,6 +15,16 @@ COPY . .
 
 # Install dependencies and build
 RUN bun install --frozen-lockfile
+
+# Build-time env vars required by apps/web/client/src/env.ts (provided by Railway service variables)
+ARG CSB_API_KEY
+ARG SUPABASE_DATABASE_URL
+ARG SUPABASE_SERVICE_ROLE_KEY
+ARG OPENROUTER_API_KEY
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+ARG NEXT_PUBLIC_SITE_URL
+
 RUN cd apps/web/client && bun run build:standalone
 
 # Expose the application port
